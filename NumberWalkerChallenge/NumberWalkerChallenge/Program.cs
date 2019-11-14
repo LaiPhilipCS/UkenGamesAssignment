@@ -46,16 +46,24 @@ namespace NumberWalkerChallenge
             
             while ((currentLine = fileStream.ReadLine()) != null)
             {
-                // Get current number and add it to dictionary
-                currentNumber = Convert.ToInt32(currentLine);
-
-                if (!tracker.ContainsKey(currentNumber))
+                // Check that current line is a number. Skip line if not numeric.
+                if (Int32.TryParse(currentLine, out currentNumber))
                 {
-                    tracker[currentNumber] = 1;
+                    // Get current number and add it to dictionary
+                    if (!tracker.ContainsKey(currentNumber))
+                    {
+                        tracker[currentNumber] = 1;
+                    }
+                    else
+                    {
+                        tracker[currentNumber]++;
+                    }
                 } else
                 {
-                    tracker[currentNumber]++;
-                }              
+                    // Output error message if line is not numeric
+                    Console.WriteLine("Error: A non-integer value \"" + currentLine + 
+                        "\" was found in the text file. This line has been skipped.");
+                }                
                 
             }
 
